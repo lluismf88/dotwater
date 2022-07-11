@@ -31,6 +31,8 @@ export default {
 
     #content {
         margin-top: $menu-top-height;
+        width: 100%;
+        height: calc(100% - #{$menu-top-height});
     }
 }
 </style>

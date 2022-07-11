@@ -9,11 +9,9 @@ export default {};
 </script>
 
 <style lang="scss" scoped>
-#header {
-    background-color: #cb1212;
+#fullcontent {
     position: fixed;
     width: 100%;
-    height: 75px;
-    top: 0;
+    height: calc(100% - $menu-top-height);
 }
 </style>
