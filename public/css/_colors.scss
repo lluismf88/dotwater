@@ -1,0 +1,339 @@
+/*************** GLOBALES ******************************/
+// MAIN color
+// $main-color -> $main
+// $sec-color -> ELIMINADO
+$main: #374673; // $main old blue color #475b96; // Another main color before blue #2C52C4
+$main-light: lighten($main, 10%);
+$main-dark: darken($main, 10%);
+$main-text: #475b96;
+// Tints 100% blanco -> 0% color
+// Colores que van desde el $main hasta el BLANCO
+// Es decir, a mayor numero, mas claro/blanco será el $main
+$main-t90: tint($main, 90%);
+$main-t80: tint($main, 80%);
+$main-t70: tint($main, 70%);
+$main-t60: tint($main, 60%);
+$main-t50: tint($main, 50%);
+$main-t40: tint($main, 40%);
+$main-t30: tint($main, 30%);
+$main-t20: tint($main, 20%);
+$main-t10: tint($main, 10%);
+// Shades 100% negro -> 0% color
+// Colores que van desde el $main hasta el NEGRO
+// Es decir, a mayor numero, mas oscuro/negro será el $main
+$main-s90: shade($main, 90%);
+$main-s80: shade($main, 80%);
+$main-s70: shade($main, 70%);
+$main-s60: shade($main, 60%);
+$main-s50: shade($main, 50%);
+$main-s40: shade($main, 40%);
+$main-s30: shade($main, 30%);
+$main-s20: shade($main, 20%);
+$main-s10: shade($main, 10%);
+//
+
+// Complementary color (to highlight)
+// $complem-color -> $accent
+$accent: #e08c43;
+$accent-light: lighten($accent, 10%);
+$accent-dark: darken($accent, 10%);
+$accent-text: shade($accent, 85%);
+// Tints 100% blanco -> 0% color
+$accent-t90: tint($accent, 90%);
+$accent-t80: tint($accent, 80%);
+$accent-t70: tint($accent, 70%);
+$accent-t60: tint($accent, 60%);
+$accent-t50: tint($accent, 50%);
+$accent-t40: tint($accent, 40%);
+$accent-t30: tint($accent, 30%);
+$accent-t20: tint($accent, 20%);
+$accent-t10: tint($accent, 10%);
+// Shades 100% negro -> 0% color
+$accent-s90: shade($accent, 90%);
+$accent-s80: shade($accent, 80%);
+$accent-s70: shade($accent, 70%);
+$accent-s60: shade($accent, 60%);
+$accent-s50: shade($accent, 50%);
+$accent-s40: shade($accent, 40%);
+$accent-s30: shade($accent, 30%);
+$accent-s20: shade($accent, 20%);
+$accent-s10: shade($accent, 10%);
+//
+
+// Color neutro
+// $aux-color -> $neutro
+$neutro: #e3e7ed;
+$neutro-light: lighten($neutro, 10%);
+$neutro-dark: darken($neutro, 10%);
+$neutro-text: shade($neutro, 85%);
+// Tints 100% blanco -> 0% color
+$neutro-t90: tint($neutro, 90%);
+$neutro-t80: tint($neutro, 80%);
+$neutro-t70: tint($neutro, 70%);
+$neutro-t60: tint($neutro, 60%);
+$neutro-t50: tint($neutro, 50%);
+$neutro-t40: tint($neutro, 40%);
+$neutro-t30: tint($neutro, 30%);
+$neutro-t20: tint($neutro, 20%);
+$neutro-t10: tint($neutro, 10%);
+// Shades 100% negro -> 0% color
+$neutro-s90: shade($neutro, 90%);
+$neutro-s80: shade($neutro, 80%);
+$neutro-s70: shade($neutro, 70%);
+$neutro-s60: shade($neutro, 60%);
+$neutro-s50: shade($neutro, 50%);
+$neutro-s40: shade($neutro, 40%);
+$neutro-s30: shade($neutro, 30%);
+$neutro-s20: shade($neutro, 20%);
+$neutro-s10: shade($neutro, 10%);
+//
+
+/* COLORES SEMAFORO */
+// Inactive
+$inactive: #ddd;
+$inactive-light: lighten($inactive, 15%);
+$inactive-dark: darken($inactive, 20%);
+$inactive-text: shade($inactive, 85%);
+// Tints 100% blanco -> 0% color
+$inactive-t90: tint($inactive, 90%);
+$inactive-t80: tint($inactive, 80%);
+$inactive-t70: tint($inactive, 70%);
+$inactive-t60: tint($inactive, 60%);
+$inactive-t50: tint($inactive, 50%);
+$inactive-t40: tint($inactive, 40%);
+$inactive-t30: tint($inactive, 30%);
+$inactive-t20: tint($inactive, 20%);
+$inactive-t10: tint($inactive, 10%);
+// Shades 100% negro -> 0% color
+$inactive-s90: shade($inactive, 90%);
+$inactive-s80: shade($inactive, 80%);
+$inactive-s70: shade($inactive, 70%);
+$inactive-s60: shade($inactive, 60%);
+$inactive-s50: shade($inactive, 50%);
+$inactive-s40: shade($inactive, 40%);
+$inactive-s30: shade($inactive, 30%);
+$inactive-s20: shade($inactive, 20%);
+$inactive-s10: shade($inactive, 10%);
+//
+
+// Rojo error
+// $alert-color -> $error
+$error: #e55d5c;
+$error-light: lighten($error, 15%);
+$error-dark: darken($error, 20%);
+$error-text: shade($error, 85%);
+// Tints 100% blanco -> 0% color
+$error-t90: tint($error, 90%);
+$error-t80: tint($error, 80%);
+$error-t70: tint($error, 70%);
+$error-t60: tint($error, 60%);
+$error-t50: tint($error, 50%);
+$error-t40: tint($error, 40%);
+$error-t30: tint($error, 30%);
+$error-t20: tint($error, 20%);
+$error-t10: tint($error, 10%);
+// Shades 100% negro -> 0% color
+$error-s90: shade($error, 90%);
+$error-s80: shade($error, 80%);
+$error-s70: shade($error, 70%);
+$error-s60: shade($error, 60%);
+$error-s50: shade($error, 50%);
+$error-s40: shade($error, 40%);
+$error-s30: shade($error, 30%);
+$error-s20: shade($error, 20%);
+$error-s10: shade($error, 10%);
+//
+
+// Amarillo aviso
+// $warning-color -> $warning
+$warning: #cd902f;
+$warning-light: lighten($warning, 15%);
+$warning-dark: darken($warning, 20%);
+$warning-text: shade($warning, 85%);
+// Tints 100% blanco -> 0% color
+$warning-t90: tint($warning, 90%);
+$warning-t80: tint($warning, 80%);
+$warning-t70: tint($warning, 70%);
+$warning-t60: tint($warning, 60%);
+$warning-t50: tint($warning, 50%);
+$warning-t40: tint($warning, 40%);
+$warning-t30: tint($warning, 30%);
+$warning-t20: tint($warning, 20%);
+$warning-t10: tint($warning, 10%);
+// Shades 100% negro -> 0% color
+$warning-s90: shade($warning, 90%);
+$warning-s80: shade($warning, 80%);
+$warning-s70: shade($warning, 70%);
+$warning-s60: shade($warning, 60%);
+$warning-s50: shade($warning, 50%);
+$warning-s40: shade($warning, 40%);
+$warning-s30: shade($warning, 30%);
+$warning-s20: shade($warning, 20%);
+$warning-s10: shade($warning, 10%);
+//
+
+// Verde en progreso (verde shrek)
+// $progress-color -> $progress
+$progress: #abba37;
+$progress-light: lighten($progress, 15%);
+$progress-dark: darken($progress, 20%);
+$progress-text: shade($progress, 85%);
+// Tints 100% blanco -> 0% color
+$progress-t90: tint($progress, 90%);
+$progress-t80: tint($progress, 80%);
+$progress-t70: tint($progress, 70%);
+$progress-t60: tint($progress, 60%);
+$progress-t50: tint($progress, 50%);
+$progress-t40: tint($progress, 40%);
+$progress-t30: tint($progress, 30%);
+$progress-t20: tint($progress, 20%);
+$progress-t10: tint($progress, 10%);
+// Shades 100% negro -> 0% color
+$progress-s90: shade($progress, 90%);
+$progress-s80: shade($progress, 80%);
+$progress-s70: shade($progress, 70%);
+$progress-s60: shade($progress, 60%);
+$progress-s50: shade($progress, 50%);
+$progress-s40: shade($progress, 40%);
+$progress-s30: shade($progress, 30%);
+$progress-s20: shade($progress, 20%);
+$progress-s10: shade($progress, 10%);
+//
+
+// Verde completado (Verde vue)
+// $ok-color -> $done
+$success: #6fc6a6;
+$success-text: shade($success, 85%);
+$success-light: tint($success, 25%);
+$success-dark: shade($success, 25%);
+
+// Verde completado (Verde vue)
+// $ok-color -> $done
+$done: #0ca082;
+$done-light: lighten($done, 15%);
+$done-dark: darken($done, 20%);
+$done-text: shade($done, 85%);
+// Tints 100% blanco -> 0% color
+$done-t90: tint($done, 90%);
+$done-t80: tint($done, 80%);
+$done-t70: tint($done, 70%);
+$done-t60: tint($done, 60%);
+$done-t50: tint($done, 50%);
+$done-t40: tint($done, 40%);
+$done-t30: tint($done, 30%);
+$done-t20: tint($done, 20%);
+$done-t10: tint($done, 10%);
+// Shades 100% negro -> 0% color
+$done-s90: shade($done, 90%);
+$done-s80: shade($done, 80%);
+$done-s70: shade($done, 70%);
+$done-s60: shade($done, 60%);
+$done-s50: shade($done, 50%);
+$done-s40: shade($done, 40%);
+$done-s30: shade($done, 30%);
+$done-s20: shade($done, 20%);
+$done-s10: shade($done, 10%);
+//
+
+// Azul normal
+// $info-color -> $info
+$info: #b7cbe3;
+$info-light: lighten($info, 15%);
+$info-dark: darken($info, 20%);
+$info-text: shade($info, 85%);
+// Tints 100% blanco -> 0% color
+$info-t90: tint($info, 90%);
+$info-t80: tint($info, 80%);
+$info-t70: tint($info, 70%);
+$info-t60: tint($info, 60%);
+$info-t50: tint($info, 50%);
+$info-t40: tint($info, 40%);
+$info-t30: tint($info, 30%);
+$info-t20: tint($info, 20%);
+$info-t10: tint($info, 10%);
+// Shades 100% negro -> 0% color
+$info-s90: shade($info, 90%);
+$info-s80: shade($info, 80%);
+$info-s70: shade($info, 70%);
+$info-s60: shade($info, 60%);
+$info-s50: shade($info, 50%);
+$info-s40: shade($info, 40%);
+$info-s30: shade($info, 30%);
+$info-s20: shade($info, 20%);
+$info-s10: shade($info, 10%);
+//
+
+/* Colores base */
+$default-bg-color: #f4f2ed; // -> Crema
+// Tints 100% blanco -> 0% color
+$default-bg-color-t90: tint($default-bg-color, 90%);
+$default-bg-color-t80: tint($default-bg-color, 80%);
+$default-bg-color-t70: tint($default-bg-color, 70%);
+$default-bg-color-t60: tint($default-bg-color, 60%);
+$default-bg-color-t50: tint($default-bg-color, 50%);
+$default-bg-color-t40: tint($default-bg-color, 40%);
+$default-bg-color-t30: tint($default-bg-color, 30%);
+$default-bg-color-t20: tint($default-bg-color, 20%);
+$default-bg-color-t10: tint($default-bg-color, 10%);
+// Shades 100% negro -> 0% color
+$default-bg-color-s90: shade($default-bg-color, 90%);
+$default-bg-color-s80: shade($default-bg-color, 80%);
+$default-bg-color-s70: shade($default-bg-color, 70%);
+$default-bg-color-s60: shade($default-bg-color, 60%);
+$default-bg-color-s50: shade($default-bg-color, 50%);
+$default-bg-color-s40: shade($default-bg-color, 40%);
+$default-bg-color-s30: shade($default-bg-color, 30%);
+$default-bg-color-s20: shade($default-bg-color, 20%);
+$default-bg-color-s10: shade($default-bg-color, 10%);
+
+$default-content-color: #f9f3f2; // -> Rosado
+$default-sec-color: #ede7db; // -> Rosado
+// $default-content-color: #f7f2f1;   // -> Rosado
+// $default-content-color: #f6efee;   // -> Rosado (original)
+
+/* Colores "monocroma" con $main */
+$mono-1: #3f4d89;
+$mono-1-light: lighten(#3f4d89, 15%);
+$mono-1-dark: darken(#3f4d89, 10%);
+
+$mono-2: #3f7e8c;
+$mono-2-light: lighten(#3f7e8c, 15%);
+$mono-2-dark: darken(#3f7e8c, 10%);
+
+$mono-3: #3f8c6d;
+$mono-3-light: lighten(#3f8c6d, 15%);
+$mono-3-dark: darken(#3f8c6d, 10%);
+
+$mono-4: #758c3e;
+$mono-4-light: lighten(#758c3e, 15%);
+$mono-4-dark: darken(#758c3e, 10%);
+
+$mono-5: #988d33;
+$mono-5-light: lighten(#988d33, 15%);
+$mono-5-dark: darken(#988d33, 10%);
+
+$mono-6: #9d6126;
+$mono-6-light: lighten(#9d6126, 15%);
+$mono-6-dark: darken(#9d6126, 10%);
+
+$mono-7: #841c1c;
+$mono-7-light: lighten(#841c1c, 15%);
+$mono-7-dark: darken(#841c1c, 10%);
+
+$mono-8: #8d3f8c;
+$mono-8-light: lighten(#8d3f8c, 15%);
+$mono-8-dark: darken(#8d3f8c, 10%);
+
+$mono-9: #5e3f8c;
+$mono-9-light: lighten(#5e3f8c, 15%);
+$mono-9-dark: darken(#5e3f8c, 10%);
+
+$list-child-even: #eee;
+
+/*************** OTRAS HERRAMIENTAS ******************************/
+
+/* CHECKLIST DETAIL */
+$check-bg-dark: #999999;
+$check-answer: #595a5c;
+
+$sync-main: #31a8f7;

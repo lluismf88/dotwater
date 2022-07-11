@@ -1,0 +1,244 @@
+$calendar-click: 30px;
+$calendar-click-double: $calendar-click * 2;
+
+.calendar {
+    display: block;
+    height: 100%;
+}
+
+.calendar header {
+    width: 100%;
+    height: auto;
+    max-height: $calendar-click-double;
+
+    .current-date, .month-nav {
+        overflow: hidden;
+        height: $calendar-click;
+        display: block;
+    }
+
+    .current-date {
+        background-color: #fefefe;
+
+        .value {
+            @include font-size(17);
+            font-family: $text-light;
+            text-transform: capitalize;
+            float: left;
+            width: calc(100% - #{$calendar-click-double});
+            height: $calendar-click;
+            line-height: $calendar-click;
+            text-align: center;
+        }
+
+        .day-before, .day-next {
+            @include background($size: 15px );
+            display: block;
+            width: $calendar-click;
+            height: $calendar-click;
+            cursor: pointer;
+        }
+        .day-before {
+            float: left;
+            background-image: img("left_dark.svg");
+        }
+        .day-next {
+            float: right;
+            background-image: img("right_dark.svg");
+        }
+    }
+
+    .month-nav {
+
+        .month {
+            @include font-size(14);
+            font-family: $text;
+            float: left;
+            width: calc(100% - #{$calendar-click-double});
+            height: $calendar-click;
+            line-height: $calendar-click;
+            text-align: left;
+            padding-left: 10px;
+        }
+
+        .btn-next, .btn-prev {
+            @include background($size: 12px );
+            display: block;
+            width: $calendar-click;
+            height: $calendar-click;
+            cursor: pointer;
+
+            &:hover, &:active {
+                // color: #f9f9f9;
+            }
+
+        }
+        .btn-prev {
+            float: left;
+            background-image: img("left_dark.svg");
+        }
+        .btn-next {
+            float: right;
+            background-image: img("right_dark.svg");
+        }
+
+    }
+
+}
+
+.calendar .grid {
+    height: calc(100% - #{$calendar-click-double});
+    display: block;
+
+    .days-header {
+        @include display-flex();
+        @include align-items();
+        @include justify-content();
+        height: $calendar-click - 10px;
+        width: 100%;
+        background-color: $main-t90;
+
+        span {
+            @include font-size(14);
+            color: #444;
+            width: 100%;
+            min-width: $calendar-click;
+            max-width: calc(100% / 7);
+            text-transform: uppercase;
+            text-align: center;
+            font-family: $text-bold;
+            letter-spacing: -1px;
+        }
+    }
+
+    .month-body {
+        height: calc(100% - #{$calendar-click} + 10px);
+        width: 100%;
+    }
+
+    .month-body .week {
+        @include display-flex();
+        @include align-items();
+        @include justify-content();
+
+        width: 100%;
+        height: 100%;
+        min-height: $calendar-click;
+        max-height: calc(100% / 6);
+    }
+
+    .month-body .day {
+        @include display-inline-flex();
+        @include align-items($val: flex-start);
+        @include justify-content();
+        @include flex-wrap($w: wrap);
+        @include font-size(13);
+        position: relative;
+        height: 100%;
+        width: 100%;
+        min-width: $calendar-click;
+        max-width: calc(100% / 7);
+        text-align: center;
+        overflow: hidden;
+        padding-top: 2px;
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        &.nextMonth,
+        &.prevMonth {
+            .day-value {
+                color: #b5b5b5;
+            }
+        }
+        &.nextMonth.disabled,
+        &.prevMonth.disabled {
+            .day-value {
+                color: #ccc;
+            }
+        }
+
+        &.active {
+            .day-value{
+                background-color: rgba($main, 0.2);
+                // color: #fff;
+            }
+        }
+        &.current-day {
+            .day-value {
+                font-weight: bold;
+                color: #fff;
+                background-color: $main;
+            }
+        }
+        &.good-day {
+            .day-value {
+                border: 2px solid $done;
+            }
+        }
+        &.bad-day, &.alert-task {
+            .day-value {
+                border: 2px solid $error;
+            }
+        }
+        &.warning-day {
+            .day-value {
+                border: 2px solid $warning;
+            }
+        }
+
+
+
+        .day-value {
+            @include font-size(14);
+            @include border-radius(100%);
+            color: #666;
+            font-family: $text-light;
+            text-align: center;
+            line-height: 1.5rem;
+            height: calc(#{$calendar-click} - 7px);
+            width: calc(#{$calendar-click} - 7px);
+            display: block;
+        }
+
+        .events {
+            text-align: center;
+            height: 7px;
+            display: block;
+            width: 100%;
+            line-height: 5px;
+
+            .task, .note {
+                @include border-radius(50%);
+                width: 5px;
+                height: 5px;
+                display: none;
+                margin: 0px 1px 3px 1px;
+            }
+
+            .note.active {
+                background-color: $error;
+                display: inline-block;
+            }
+
+            .note.complete {
+                background-color: $done;
+                display: inline-block;
+            }
+
+            .task.active {
+                background-color: $error;
+                display: inline-block;
+            }
+        }
+        &.active .events {
+            display: none;
+        }
+
+
+
+
+    }
+
+}

@@ -1,0 +1,167 @@
+// NOPE
+// @import '~vuetify/dist/vuetify.min.css';
+// Mejor no romper todos los estilos :^)
+
+// RESET
+
+html {
+    overflow-y: initial;
+}
+
+// Los dichosos menus desplegables
+.v-menu {
+    // position: relative;
+}
+.v-menu__content {
+    // top: -200px !important;
+    top: 0 !important;
+    left: 0 !important;
+    z-index: 1;
+}
+
+// DATATABLE
+
+.v-table {
+}
+
+.v-datatable {
+    $vdt-light-color: #fff;
+    $vdt-dark-color: $neutro-t80;
+    $vdt-hover-color: $neutro-t70;
+
+    width: 100%;
+
+    thead {
+        tr:first-child {
+            border-bottom: none !important;
+        }
+
+        .column {
+            height: 40px;
+            overflow: auto;
+            padding: 6px 0 0 0;
+            vertical-align: middle;
+            background-color: $vdt-light-color;
+        }
+
+        .v-datatable__progress {
+            .column {
+                height: 6px;
+                padding: 0;
+            }
+        }
+    }
+
+    tbody {
+        tr:hover {
+            background-color: $vdt-hover-color !important;
+            cursor: pointer;
+        }
+        tr:not(:last-child) {
+            border-bottom: none !important;
+        }
+
+        tr:nth-child(odd) {
+            background-color: $vdt-dark-color;
+        }
+
+        tr:nth-child(even) {
+            background-color: $vdt-light-color;
+        }
+        tr td {
+            //@include font-size(15);
+            height: 30px;
+            padding: 6px 0;
+            vertical-align: middle;
+        }
+    }
+}
+
+// INPUTS
+
+.v-input__prepend-outer {
+    margin-right: 6px !important;
+    margin-left: 9px !important;
+}
+
+.value {
+    .v-input__slot {
+        input {
+            border: none !important;
+        }
+    }
+}
+.v-input__slot {
+    &:before {
+        border: 1px solid #ddd !important;
+    }
+    &:after {
+        border-color: $main !important;
+    }
+}
+
+// TILES (estan en menus de input select)
+
+.v-list {
+    padding: 0;
+}
+.v-list__tile {
+    height: 40px;
+}
+
+// PICKERS
+.v-picker--date {
+    .v-picker__title {
+        background-color: $main-t90;
+
+        .v-date-picker-title__year {
+            @include font-size(20);
+        }
+        .v-date-picker-title__date {
+            div {
+                @include font-size(26);
+                color: $main-s60;
+                font-family: $text;
+            }
+        }
+    }
+
+    .v-picker__body {
+        .v-date-picker-header .accent--text {
+            text-align: center;
+
+            button {
+                color: $main-dark !important;
+            }
+        }
+    }
+
+    .v-date-picker-years {
+        li {
+            text-align: center;
+        }
+    }
+
+    .v-btn .v-btn__content {
+        font-family: $text-light;
+    }
+    .v-btn--active {
+        background-color: $main !important;
+        .v-btn__content {
+            font-family: $text;
+        }
+    }
+    .v-btn--outline {
+        border-color: #aaa !important;
+    }
+}
+
+// Varios
+
+/* Notas para futuro:
+* En la clase .title de sus css, he quitado todos los !important.
+*
+*
+*
+*
+*/

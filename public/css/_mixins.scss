@@ -1,0 +1,921 @@
+/* MEDIA QUERIES */
+@import 'assets/include-media';
+
+/* Queridas rutas del querido vue */
+@function img($img) {
+    @return url('~@/../public/img/'+$img);
+}
+
+/* COLOR FUNCTIONS */
+@function tint($color, $percentage) {
+    @return mix(#ffffff, $color, $percentage);
+}
+@function shade($color, $percentage) {
+    @return mix(#000000, $color, $percentage);
+}
+
+@function hover($color, $opacity: false, $percentage: 3%) {
+    // Si cambiamos el % por defecto, cambiarlo tambien en la condicion porfa :3
+    @if ($color == #fff or $color == #ffffff or $color == white) and $percentage == 3% {
+        @if $opacity == true {
+            @return darken(rgba($color, 0.15), 1.5%);
+        } @else {
+            @return darken($color, 1.5%);
+        }
+    } @else {
+        @if $opacity == true {
+            @return darken(rgba($color, 0.15), $percentage);
+        } @else {
+            @return darken($color, $percentage);
+        }
+    }
+}
+
+// ATENCION. Este es el unico mixin que deberiamos poner al final (para que no se sobreescriba)
+@mixin bgHover($color, $opacity: false, $percentage: 3%) {
+    &:hover {
+        background-color: hover($color, $opacity, $percentage);
+    }
+}
+
+/* CROSSBROWSER AND VENDOR PREFIXES */
+/* FLEXBOX */
+
+/// Mixin to prefix several properties at once
+/// @author Hugo Giraudel
+/// @param {Map} $declarations - Declarations to prefix
+/// @param {List} $prefixes (()) - List of prefixes to print
+@mixin prefix($declarations, $prefixes: ()) {
+    @each $property, $value in $declarations {
+        @each $prefix in $prefixes {
+            #{'-' + $prefix + '-' + $property}: $value;
+        }
+        // Output standard non-prefixed declaration
+        #{$property}: $value;
+    }
+}
+// example
+// .selector {
+//   @include prefix((
+//     column-count: 3,
+//     column-gap: 1.5em,
+//     column-rule: 2px solid hotpink
+//   ), webkit moz);
+// }
+
+@mixin placeholder {
+    &::-webkit-input-placeholder {
+        @content;
+    }
+    &:-moz-placeholder {
+        @content;
+    }
+    &::-moz-placeholder {
+        @content;
+    }
+    &:-ms-input-placeholder {
+        @content;
+    }
+}
+
+@mixin hideScrollbar() {
+    &::-webkit-scrollbar,
+    &::-webkit-scrollbar {
+        width: 0 !important;
+        height: 0 !important;
+        background: transparent !important;
+    }
+    &::-webkit-scrollbar-thumb,
+    &::-webkit-scrollbar-thumb {
+        background: transparent;
+    }
+}
+
+@mixin display-flex {
+    display: -webkit-box; // old
+    display: -moz-box; // old
+    display: -ms-flexbox; // ie
+    display: -webkit-flex; // new
+    display: flex; // new
+}
+%display-flex {
+    @include display-flex;
+}
+@mixin display-inline-flex {
+    display: -webkit-inline-box;
+    display: -moz-inline-box;
+    display: -webkit-inline-flex;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+}
+%display-inline-flex {
+    @include display-inline-flex;
+}
+@mixin flex-direction($dir: row) {
+    @if $dir == row-reverse {
+        -webkit-box-direction: reverse;
+        -webkit-box-orient: horizontal;
+        -moz-box-direction: reverse;
+        -moz-box-orient: horizontal;
+    } @else if $dir == column {
+        -webkit-box-direction: normal;
+        -webkit-box-orient: vertical;
+        -moz-box-direction: normal;
+        -moz-box-orient: vertical;
+    } @else if $dir == column-reverse {
+        -webkit-box-direction: reverse;
+        -webkit-box-orient: vertical;
+        -moz-box-direction: reverse;
+        -moz-box-orient: vertical;
+    } @else {
+        -webkit-box-direction: normal;
+        -webkit-box-orient: horizontal;
+        -moz-box-direction: normal;
+        -moz-box-orient: horizontal;
+    }
+    -webkit-flex-direction: $dir;
+    -ms-flex-direction: $dir;
+    flex-direction: $dir;
+}
+@mixin flex-wrap($w: nowrap) {
+    // No Webkit/FF Box fallback.
+    -webkit-flex-wrap: $w;
+    @if $w == nowrap {
+        -ms-flex-wrap: none;
+    } @else {
+        -ms-flex-wrap: $w;
+    }
+    flex-wrap: $w;
+}
+@mixin flex-flow($flow: row nowrap) {
+    // No Webkit/FF Box fallback.
+    -webkit-flex-flow: $flow;
+    -ms-flex-flow: $flow;
+    flex-flow: $flow;
+}
+@mixin flex-order($int: 0) {
+    -webkit-box-ordinal-group: $int + 1;
+    -moz-box-ordinal-group: $int + 1;
+    -webkit-order: $int;
+    -ms-flex-order: $int;
+    order: $int;
+}
+@mixin flex-grow($int: 1) {
+    -webkit-box-flex: $int;
+    -moz-box-flex: $int;
+    -webkit-flex-grow: $int;
+    -ms-flex: $int;
+    flex-grow: $int;
+}
+@mixin flex-shrink($int: 0) {
+    -webkit-flex-shrink: $int;
+    -moz-flex-shrink: $int;
+    -ms-flex: $int;
+    flex-shrink: $int;
+}
+@mixin flex-basis($val: auto) {
+    -webkit-flex-basis: $val;
+    flex-basis: $val;
+}
+@mixin justify-content($val: center) {
+    @if $val == flex-start {
+        -webkit-box-pack: start;
+        -moz-box-pack: start;
+        -ms-flex-pack: start;
+    } @else if $val == flex-end {
+        -webkit-box-pack: end;
+        -moz-box-pack: end;
+        -ms-flex-pack: end;
+    } @else if $val == space-between {
+        -webkit-box-pack: justify;
+        -moz-box-pack: justify;
+        -ms-flex-pack: justify;
+    } @else if $val == space-around {
+        -ms-flex-pack: distribute;
+    } @else {
+        -webkit-box-pack: $val;
+        -moz-box-pack: $val;
+        -ms-flex-pack: $val;
+    }
+    -webkit-justify-content: $val;
+    justify-content: $val;
+}
+@mixin align-items($val: center) {
+    @if $val == flex-start {
+        -webkit-box-align: start;
+        -moz-box-align: start;
+        -ms-flex-align: start;
+    } @else if $val == flex-end {
+        -webkit-box-align: end;
+        -moz-box-align: end;
+        -ms-flex-align: end;
+    } @else {
+        -webkit-box-align: $val;
+        -moz-box-align: $val;
+        -ms-flex-align: $val;
+    }
+    -webkit-align-items: $val;
+    align-items: $val;
+}
+@mixin align-self($value: auto) {
+    // No Webkit Box Fallback.
+    -webkit-align-self: $value;
+    @if $value == flex-start {
+        -ms-flex-item-align: start;
+    } @else if $value == flex-end {
+        -ms-flex-item-align: end;
+    } @else {
+        -ms-flex-item-align: $value;
+    }
+    align-self: $value;
+}
+@mixin align-content($val: stretch) {
+    // No Webkit Box Fallback.
+    -webkit-align-content: $val;
+    @if $val == flex-start {
+        -ms-flex-line-pack: start;
+    } @else if $val == flex-end {
+        -ms-flex-line-pack: end;
+    } @else {
+        -ms-flex-line-pack: $val;
+    }
+    align-content: $val;
+}
+
+@mixin border-radius($radius: $default-border-radius, $important: false) {
+    @if $important == true {
+        -ms-border-radius: $radius + !important;
+        -o-border-radius: $radius + !important;
+        -moz-border-radius: $radius + !important;
+        -webkit-border-radius: $radius + !important;
+        border-radius: $radius + !important;
+        background-clip: padding-box + !important; /* stops bg color from leaking outside the border: */
+    } @else {
+        -ms-border-radius: $radius;
+        -o-border-radius: $radius;
+        -moz-border-radius: $radius;
+        -webkit-border-radius: $radius;
+        border-radius: $radius;
+        background-clip: padding-box; /* stops bg color from leaking outside the border: */
+    }
+}
+@mixin border-top-radius($radius: $default-border-radius, $important: false) {
+    @if $important == true {
+        border-radius: 0 + !important;
+        -ms-border-top-right-radius: $radius + !important;
+        -o-border-top-right-radius: $radius + !important;
+        -moz-border-top-right-radius: $radius + !important;
+        -webkit-border-top-right-radius: $radius + !important;
+        border-top-right-radius: $radius + !important;
+        -ms-border-top-left-radius: $radius + !important;
+        -o-border-top-left-radius: $radius + !important;
+        -moz-border-top-left-radius: $radius + !important;
+        -webkit-border-top-left-radius: $radius + !important;
+        border-top-left-radius: $radius + !important;
+        background-clip: padding-box + !important;
+    } @else {
+        border-radius: 0;
+        -ms-border-top-right-radius: $radius;
+        -o-border-top-right-radius: $radius;
+        -moz-border-top-right-radius: $radius;
+        -webkit-border-top-right-radius: $radius;
+        border-top-right-radius: $radius;
+        -ms-border-top-left-radius: $radius;
+        -o-border-top-left-radius: $radius;
+        -moz-border-top-left-radius: $radius;
+        -webkit-border-top-left-radius: $radius;
+        border-top-left-radius: $radius;
+        background-clip: padding-box;
+    }
+}
+@mixin border-right-radius($radius: $default-border-radius, $important: false) {
+    @if $important == true {
+        border-radius: 0 + !important;
+        -ms-border-bottom-right-radius: $radius + !important;
+        -o-border-bottom-right-radius: $radius + !important;
+        -moz-border-bottom-right-radius: $radius + !important;
+        -webkit-border-bottom-right-radius: $radius + !important;
+        border-bottom-right-radius: $radius + !important;
+        -ms-border-top-right-radius: $radius + !important;
+        -o-border-top-right-radius: $radius + !important;
+        -moz-border-top-right-radius: $radius + !important;
+        -webkit-border-top-right-radius: $radius + !important;
+        border-top-right-radius: $radius + !important;
+        background-clip: padding-box + !important;
+    } @else {
+        border-radius: 0;
+        -ms-border-bottom-right-radius: $radius;
+        -o-border-bottom-right-radius: $radius;
+        -moz-border-bottom-right-radius: $radius;
+        -webkit-border-bottom-right-radius: $radius;
+        border-bottom-right-radius: $radius;
+        -ms-border-top-right-radius: $radius;
+        -o-border-top-right-radius: $radius;
+        -moz-border-top-right-radius: $radius;
+        -webkit-border-top-right-radius: $radius;
+        border-top-right-radius: $radius;
+        background-clip: padding-box;
+    }
+}
+@mixin border-bottom-radius($radius: $default-border-radius, $important: false) {
+    @if $important == true {
+        border-radius: 0 + !important;
+        -ms-border-bottom-right-radius: $radius + !important;
+        -o-border-bottom-right-radius: $radius + !important;
+        -moz-border-bottom-right-radius: $radius + !important;
+        -webkit-border-bottom-right-radius: $radius + !important;
+        border-bottom-right-radius: $radius + !important;
+        -ms-border-bottom-left-radius: $radius + !important;
+        -o-border-bottom-left-radius: $radius + !important;
+        -moz-border-bottom-left-radius: $radius + !important;
+        -webkit-border-bottom-left-radius: $radius + !important;
+        border-bottom-left-radius: $radius + !important;
+        background-clip: padding-box + !important;
+    } @else {
+        border-radius: 0;
+        -ms-border-bottom-right-radius: $radius;
+        -o-border-bottom-right-radius: $radius;
+        -moz-border-bottom-right-radius: $radius;
+        -webkit-border-bottom-right-radius: $radius;
+        border-bottom-right-radius: $radius;
+        -ms-border-bottom-left-radius: $radius;
+        -o-border-bottom-left-radius: $radius;
+        -moz-border-bottom-left-radius: $radius;
+        -webkit-border-bottom-left-radius: $radius;
+        border-bottom-left-radius: $radius;
+        background-clip: padding-box;
+    }
+}
+@mixin border-left-radius($radius: $default-border-radius, $important: false) {
+    @if $important == true {
+        border-radius: 0 + !important;
+        -ms-border-bottom-left-radius: $radius + !important;
+        -o-border-bottom-left-radius: $radius + !important;
+        -moz-border-bottom-left-radius: $radius + !important;
+        -webkit-border-bottom-left-radius: $radius + !important;
+        border-bottom-left-radius: $radius + !important;
+        -ms-border-top-left-radius: $radius + !important;
+        -o-border-top-left-radius: $radius + !important;
+        -moz-border-top-left-radius: $radius + !important;
+        -webkit-border-top-left-radius: $radius + !important;
+        border-top-left-radius: $radius + !important;
+        background-clip: padding-box + !important;
+    } @else {
+        border-radius: 0;
+        -ms-border-bottom-left-radius: $radius;
+        -o-border-bottom-left-radius: $radius;
+        -moz-border-bottom-left-radius: $radius;
+        -webkit-border-bottom-left-radius: $radius;
+        border-bottom-left-radius: $radius;
+        -ms-border-top-left-radius: $radius;
+        -o-border-top-left-radius: $radius;
+        -moz-border-top-left-radius: $radius;
+        -webkit-border-top-left-radius: $radius;
+        border-top-left-radius: $radius;
+        background-clip: padding-box;
+    }
+}
+
+@mixin width-max-content() {
+    width: intrinsic;
+    width: -moz-max-content;
+    width: -webkit-max-content;
+    width: max-content;
+}
+@mixin width-min-content() {
+    width: -moz-min-content;
+    width: -webkit-min-content;
+    width: min-content;
+}
+@mixin width-fit-content() {
+    display: table;
+    width: auto;
+    width: -moz-fit-content;
+    width: -webkit-fit-content;
+    width: fit-content;
+}
+
+@mixin height-max-content() {
+    height: intrinsic;
+    height: -moz-max-content;
+    height: -webkit-max-content;
+    height: max-content;
+}
+@mixin height-min-content() {
+    height: -moz-min-content;
+    height: -webkit-min-content;
+    height: min-content;
+}
+@mixin height-fit-content() {
+    height: auto;
+    height: -moz-fit-content;
+    height: -webkit-fit-content;
+    height: fit-content;
+}
+
+@mixin border-image($style: solid, $width: 6px, $color: $main, $image: linear-gradient(to left, $main-dark, $main-light), $slice: 1) {
+    -moz-border-image: $image 20 round;
+    -webkit-border-image: $image 20 round;
+    -o-border-image: $image 20 round;
+    border-image: $image 20 round;
+
+    border-image-slice: $slice;
+    border-color: $color;
+    border-width: $width;
+    border-style: $style;
+}
+
+@mixin opacity($opacity) {
+    opacity: $opacity;
+    $opacity-ie: $opacity * 100;
+    filter: alpha(opacity=$opacity-ie); //IE8
+}
+@mixin filter($filter) {
+    -webkit-filter: $filter;
+    filter: $filter;
+}
+
+@mixin box-shadow($h: 10px, $v: 10px, $b: 0px, $s: 0px, $c: #000000) {
+    -webkit-box-shadow: $h $v $b $s $c;
+    -moz-box-shadow: $h $v $b $s $c;
+    box-shadow: $h $v $b $s $c;
+}
+@mixin default-box-shadow($h: 0px, $v: 0px, $b: 6px, $s: 0px, $c: #838384, $o: 0.6) {
+    @include box-shadow($h: $h, $v: $v, $b: $b, $s: $s, $c: rgba($c, $o));
+}
+
+@function rem($size) {
+    $remSize: $size / 16px; // Si el font de base no son 16px dara problemas...?
+    @return $remSize * 1rem;
+}
+@function calculateRem($size) {
+    $remSize: $size / 16; // Si el font de base no son 16px dara problemas...?
+    @return $remSize * 1;
+    // $remSize: $size / 16px;
+    // @return $remSize * 1rem;
+}
+@mixin font-size($size: 16, $line: '', $important: false, $resize: true) {
+    /* $size: el valor del font-size en sí. Ejemplos:
+  *     inherit, unset, initial...
+  *     15, 27... Aunque esto no tiene sentido de por si, si no tiene medidas cogera los valores por defecto
+  *     17px, 4rem, 100pt ... Si tiene una medida definida lo respeta
+  *     xs, s, sm, m, ml, l, xl. Hablan por si mismas, no? De esta forma es mas sencillo y respetamos los f-s default estos
+  *  $important: si queremos que lleve un important. Sin mas. No abusamos de los important :^)
+  *  $resize: podemos decirle que NO coja las medidas por defecto (ya lo hace si lo hacemos bien, pero por si acaso)
+  */
+
+    /********************************************************************************************************
+  ** OJO CUIDAO: No pongais medidas (px, rem...) en todo el mizin porque se van los calculos al traste.  **
+  **             Si hay que poner alguna, seteadlas abajo en los font-size Y QUE SEAN RESPONSIVE         **
+  **             Pero mejor no tocar nada pls Xdddddd Vere vuestros commit :^)                           **
+  ********************************************************************************************************/
+
+    // Default font-size 'steps' (hablando en px)
+    // TODO HAY QUE HACER QUE ESTO SEA  R E S P O N S I V E  y  P R O P I O  para cada usuaaario
+    $font-xs: 12;
+    $font-s: 14;
+    $font-sm: 16;
+    $font-m: 18;
+    $font-ml: 20;
+    $font-l: 22;
+    $font-xl: 30;
+
+    // Para otras medidas que no apliquen, se
+    $font-result: 1; // Es 1 porque equivale a 1rem
+    @if $resize and ((is-integer($size) and is-font-measure($size) == false) or is-custom-size($size)) {
+        @if is-integer($size) and is-font-measure($size) == false {
+            // Basado en numero
+            @if $size <= $font-xs {
+                $font-result: $font-xs;
+            } @else if $size > $font-xs and $size <= $font-s {
+                $font-result: $font-s;
+            } @else if $size > $font-s and $size <= $font-sm {
+                $font-result: $font-sm;
+            } @else if $size > $font-sm and $size <= $font-m {
+                $font-result: $font-m;
+            } @else if $size > $font-m and $size <= $font-ml {
+                $font-result: $font-ml;
+            } @else if $size > $font-ml and $size <= $font-l {
+                $font-result: $font-l;
+            } @else if $size > $font-l and $size <= $font-xl {
+                $font-result: $font-xl;
+            }
+        } @else if is-custom-size($size) {
+            // Relative
+            @if $size == 'xs' or $size == 'sx' {
+                $font-result: $font-xs;
+            } @else if $size == 's' {
+                $font-result: $font-s;
+            } @else if $size == 'sm' or $size == 'ms' {
+                $font-result: $font-sm;
+            } @else if $size == 'm' {
+                $font-result: $font-m;
+            } @else if $size == 'ml' or $size == 'lm' {
+                $font-result: $font-ml;
+            } @else if $size == 'l' {
+                $font-result: $font-l;
+            } @else if $size == 'xl' or $size == 'lx' {
+                $font-result: $font-xl;
+            } @else if $size == 'xd' {
+                $font-result: 72px;
+                background: red; /* For browsers that do not support gradients */
+                background: -webkit-linear-gradient(left, red, orange, yellow, green, cyan, blue, purple); /* For Safari 5.1 to 6.0 */
+                background: -o-linear-gradient(right, red, orange, yellow, green, cyan, blue, purple); /* For Opera 11.1 to 12.0 */
+                background: -moz-linear-gradient(right, red, orange, yellow, green, cyan, blue, purple); /* For Firefox 3.6 to 15 */
+                background: linear-gradient(to right, red, orange, yellow, green, cyan, blue, purple); /* Standard syntax (must be last) */
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+        } @else {
+            $font-result: $size;
+        }
+
+        @if $important == true {
+            font-size: $font-result + px !important;
+            font-size: calculateRem($font-result) + rem !important;
+        } @else {
+            font-size: $font-result + px;
+            font-size: calculateRem($font-result) + rem;
+        }
+    } @else {
+        @if $important == true {
+            font-size: $size !important;
+        } @else {
+            font-size: $size;
+        }
+    }
+
+    // Codigo muerto RIP en DEP
+    // @if $size == inherit {
+    //   @if $important == true {
+    //     font-size: inherit + !important;
+    //     line-height: inherit;
+    //   } @else {
+    //     font-size: inherit;
+    //     line-height: inherit;
+    //   }
+    // } @else {
+    //   // $line: $size * 1.25;
+    //   // $line: $size * 1.1;
+    //   font-size: $size + px;
+    //
+    //   // @if $important == true {
+    //   //   font-size: $size + !important;
+    //   //   // line-height: $line;
+    //   //   font-size: calculateRem($size) + !important;
+    //   //   // line-height: $line + rem;
+    //   //   // line-height: $size + rem;
+    //   //   // line-height: ( $line / $size) + rem;
+    //   // } @else {
+    //   //   font-size: $size;
+    //   //   // line-height: $line;
+    //   //   font-size: calculateRem($size);
+    //   //   // line-height: $line + rem;
+    //   //   // line-height: $size + rem;
+    //   //   // line-height: ( $line / $size) + rem;
+    //   // }
+    // }
+}
+@mixin inheritFont() {
+    font-size: inherit;
+    font-family: inherit;
+    color: inherit;
+}
+
+@mixin calc($property, $expression) {
+    #{$property}: -moz-calc(#{$expression});
+    #{$property}: -webkit-calc(#{$expression});
+    #{$property}: calc(#{$expression});
+}
+
+// Utilities
+
+@function set-button-text-color($color) {
+    @if (lightness($color) > 40) {
+        @return #000000;
+    } @else {
+        @return #ffffff;
+    }
+}
+
+@mixin vertical-align($position: relative) {
+    position: $position;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+@mixin text-ellipsis($line: 1) {
+    overflow: hidden;
+
+    @if $line > 1 {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: $line;
+        text-overflow: clip;
+    } @else {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+}
+
+@mixin background($color: undefined, $image: undefined, $size: contain, $position: center, $repeat: no-repeat) {
+    @if $image != undefined and $color != undefined {
+        background-color: $color;
+        background-image: $image;
+        -o-background-size: $size;
+        -webkit-background-size: $size;
+        -moz-background-size: $size;
+        background-size: $size;
+        background-position: $position;
+        background-repeat: $repeat;
+    } @else if $image != undefined {
+        background-image: $image;
+        -o-background-size: $size;
+        -webkit-background-size: $size;
+        -moz-background-size: $size;
+        background-size: $size;
+        background-position: $position;
+        background-repeat: $repeat;
+    } @else if $color != undefined {
+        background-color: $color;
+        -o-background-size: $size;
+        -webkit-background-size: $size;
+        -moz-background-size: $size;
+        background-size: $size;
+        background-position: $position;
+        background-repeat: $repeat;
+    } @else {
+        -o-background-size: $size;
+        -webkit-background-size: $size;
+        -moz-background-size: $size;
+        background-size: $size;
+        background-position: $position;
+        background-repeat: $repeat;
+    }
+}
+
+@mixin linear-gradient($angle, $gradient1, $gradient2) {
+    background-color: $gradient2; /* Fallback Color */
+    background-image: -webkit-gradient(linear, $angle, from($gradient1), to($gradient2)); /* Saf4+, Chrome */
+    background-image: -webkit-linear-gradient($angle, $gradient1, $gradient2); /* Chrome 10+, Saf5.1+, iOS 5+ */
+    background-image: -moz-linear-gradient($angle, $gradient1, $gradient2); /* FF3.6 */
+    background-image: -ms-linear-gradient($angle, $gradient1, $gradient2); /* IE10 */
+    background-image: -o-linear-gradient($angle, $gradient1, $gradient2); /* Opera 11.10+ */
+    background-image: linear-gradient($angle, $gradient1, $gradient2);
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=$angle,StartColorStr='#{$gradient1}', EndColorStr='#{$gradient2}');
+}
+
+@mixin background-gradient($percentage, $color1, $color2: undefined) {
+    @if $color2 == undefined {
+        $color2: $color1;
+    }
+    background: -moz-linear-gradient(top, rgba($color1, 0) 0%, rgba($color2, 1) $percentage);
+    background: -webkit-linear-gradient(top, rgba($color1, 0) 0%, rgba($color2, 1) $percentage);
+    background: linear-gradient(to bottom, rgba($color1, 0) 0%, rgba($color2, 1) $percentage);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#{$color1}', endColorstr='#{$color2}',GradientType='#{$percentage}' );
+}
+
+@mixin nth-of-class($class, $index, $exclusive: true) {
+    $selector: $class;
+    @if ($index > 1) {
+        @for $i from 2 through $index {
+            $selector: $selector + '~'+ $class;
+        }
+    }
+    // catch original style
+    @if ($exclusive) {
+        #{$class},
+        #{$selector} {
+            @content;
+        }
+    } @else {
+        #{$selector} {
+            @content;
+        }
+    }
+}
+
+// Bendiciones
+@mixin keyframes($animationName) {
+    /*
+  @include keyframes(slide-down) {
+    0% { opacity: 1; }
+    90% { opacity: 0; }
+  }
+  */
+    @-webkit-keyframes $animationName {
+        @content;
+    }
+    @-moz-keyframes $animationName {
+        @content;
+    }
+    @-o-keyframes $animationName {
+        @content;
+    }
+    @keyframes $animationName {
+        @content;
+    }
+}
+
+@mixin small {
+    @include media('>phone', '<=tablet') {
+        @content;
+    }
+    @include media('>tablet', '<desktop') {
+        @content;
+    }
+}
+
+@mixin big {
+    @media (width: 1280px) and (max-height: 800px) {
+        @content;
+    }
+    @include media('>=desktop') {
+        @content;
+    }
+}
+
+// MIXINS FOR PORTRAIT-TABLET $MQ
+@mixin portrait-tablet {
+    @media (min-width: 650px) and (max-width: 900px) {
+        @content;
+    }
+}
+
+// Mixins que vienen de ASSETS
+// Importante: Si cambiamos algo en estos mixins, sería ideal cambiarlo tambien en assets.scss
+@mixin interaction() {
+    // En caso de cambiarlo, actualizar la clase
+    pointer-events: auto;
+    cursor: pointer;
+    // transition-duration: $transition-duration;
+}
+@mixin empty() {
+    // En caso de cambiarlo, actualizar la clase
+    @include font-size(18);
+    color: #aaa;
+    text-align: center;
+    padding: 50px 30px;
+    font-family: $text-light;
+
+    &.over-dark {
+        color: #ccc;
+    }
+}
+@mixin icoClass() {
+    // En caso de cambiarlo, actualizar la clase
+    @include background($size: 20px);
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+
+    &.edit {
+        background-image: img('edit_dark.svg');
+    }
+    &.delete {
+        background-image: img('delete_dark.svg');
+    }
+    &.download {
+        background-image: img('download_dark.svg');
+    }
+}
+@mixin keepFormat() {
+    // En caso de cambiarlo, actualizar la clase
+    span,
+    p {
+        @include font-size(inherit);
+        color: inherit;
+    }
+    b,
+    strong {
+        font-weight: bold;
+        @include font-size(inherit);
+        color: inherit;
+    }
+    i {
+        font-style: italic;
+        @include font-size(inherit);
+        color: inherit;
+    }
+
+    ul,
+    ol {
+        list-style: disc;
+        padding: 5px 0;
+        padding-left: 30px;
+
+        li {
+            @include font-size(inherit);
+            color: inherit;
+        }
+    }
+    ol {
+        list-style: decimal;
+    }
+}
+@mixin dftUserColor() {
+    // En caso de cambiarlo, actualizar la clase
+    border-radius: 50%;
+    display: inline-block;
+    min-width: 30px;
+    width: 30px;
+    height: 30px;
+    padding: 0 2px;
+
+    &:after {
+        @include font-size(12);
+        line-height: 1;
+        font-family: $text-bold;
+        color: #fff;
+        text-align: center;
+        width: 100%;
+        height: 100%;
+        display: inline-block;
+        overflow: hidden;
+        padding: 9px 3px;
+    }
+}
+@mixin styScore() {
+    // En caso de cambiarlo, actualizar la clase
+    & > *,
+    & {
+        color: $main;
+    }
+    &.success > *,
+    &.success {
+        color: $done;
+    }
+    &.progress > *,
+    &.progress {
+        color: $progress;
+    }
+    &.warning > *,
+    &.warning {
+        color: $warning;
+    }
+    &.error > *,
+    &.error {
+        color: $error;
+    }
+}
+
+@include small {
+    .vfc-main-container {
+        min-width: 14rem;
+
+        .vfc-months {
+            .vfc-item {
+                @include font-size(sm);
+            }
+        }
+    }
+}
+
+////
+// A collection of function for advanced type checking
+// @author Hugo Giraudel
+////
+@function is-number($value) {
+    @return type-of($value) == 'number';
+}
+@function is-time($value) {
+    @return is-number($value) and index('ms' 's', unit($value)) != null;
+}
+@function is-duration($value) {
+    @return is-time($value);
+}
+@function is-angle($value) {
+    @return is-number($value) and index('deg' 'rad' 'grad' 'turn', unit($value)) != null;
+}
+@function is-frequency($value) {
+    @return is-number($value) and index('Hz' 'kHz', unit($value)) != null;
+}
+@function is-integer($value) {
+    @return is-number($value) and round($value) == $value;
+}
+@function is-font-measure($value) {
+    @return is-number($value) and index('em' 'ex' 'ch' 'rem' 'vw' 'vh' 'vmin' 'vmax' 'cm' 'mm' 'in' 'px' 'pt' 'pc', unit($value)) != null;
+}
+@function is-relative-length($value) {
+    @return is-number($value) and index('em' 'ex' 'ch' 'rem' 'vw' 'vh' 'vmin' 'vmax', unit($value)) != null;
+}
+@function is-absolute-length($value) {
+    @return is-number($value) and index('cm' 'mm' 'in' 'px' 'pt' 'pc', unit($value)) != null;
+}
+@function is-percentage($value) {
+    @return is-number($value) and unit($value) == '%';
+}
+@function is-length($value) {
+    @return is-relative-length($value) or is-absolute-length($value);
+}
+@function is-resolution($value) {
+    @return is-number($value) and index('dpi' 'dpcm' 'dppx', unit($value)) != null;
+}
+@function is-position($value) {
+    @return is-length($value) or is-percentage($value) or index('top' 'right' 'bottom' 'left' 'center', $value) != null;
+}
+@function is-custom-size($value) {
+    @return index('xs' 's' 'sm' 'm' 'ml' 'l' 'xl' 'xd', $value) != null;
+}

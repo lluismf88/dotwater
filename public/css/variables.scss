@@ -1,0 +1,70 @@
+@import "mixins";
+
+/* Defaults and cosas */
+$alex-app-padding: rem(6px);
+$default-border-radius: rem(5px);
+$dft-thumb-size: rem(48px);
+$scroll-width: rem(6px);
+
+/* Height and Width Variables */
+$menu-top-height: rem(60px);
+$menu-top-tools-height: rem(48px);
+
+$menu-tools-min: rem(90px);
+$menu-tools-max: calc(99% - (#{$alex-app-padding} * 2));
+
+$menu-aux-height: rem(60px);
+
+$column-width: 30%;
+$column-max-width: 320px;
+$content-width: 70%;
+
+/* Animations variables */
+$transition-duration: 0.2s;
+
+/* z-Index Variables */
+$z-menu-tools: 38;
+$z-menu-tools-expanded: 45;
+$z-content: 40;
+$z-menu-top: 41;
+$z-menu-aux: 42;
+
+$z-snackbar-default: $z-content + 1;
+
+$z-overlay-default: $z-menu-aux + 2;
+$z-overlay-blocking: $z-content + 2;
+$z-overlay-addedit: $z-menu-aux - 6;
+
+$z-column: 4;
+
+$z-popups-default: $z-overlay-default + 2;
+$z-popups-unblocking: $z-overlay-default;
+
+/* BASE COLORS */
+@import "colors";
+/* DEFAULT FONTS */
+// TODO important
+// Cambiar las fuentes Avenir por Raleway y las condensed por Oswald
+
+$text-black: "Avenir-Bold";
+$text-xbold: "Avenir-Bold";
+$text-bold: "Avenir-Bold";
+$text-sbold: "Avenir-Bold";
+$text-medium: "Avenir-Regular";
+$text: "Avenir-Regular";
+$text-light: "Avenir-Regular";
+$text-xlight: "Avenir-Regular";
+$text-thin: "Avenir-Regular";
+
+$title-light: "Avenir-Bold-Condensed";
+$title: "Avenir-Condensed";
+$title-bold: "Avenir-Bold";
+
+$conden-bold: "Avenir-Bold-Condensed";
+$conden-sbold: "Avenir-Bold-Condensed";
+$conden-medium: "Avenir-Medium-Condensed";
+$conden: "Avenir-Medium-Condensed";
+$conden-light: "Avenir-Condensed";
+$conden-xlight: "Avenir-Condensed";
+
+@import "assets/_assets.scss";

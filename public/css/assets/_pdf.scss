@@ -1,0 +1,120 @@
+#content .full-container {
+    position: fixed;
+    z-index: $z-popups-default;
+    top: $menu-top-height;
+    left: 0;
+    width: calc( 100% - #{$menu-tools-min} );
+    height: calc( 100% - #{$menu-top-height} - #{$menu-aux-height} );
+    background-color: #222;
+    padding: 10px;
+    padding-top: 50px;
+    overflow-y: scroll;
+    text-align: center;
+
+    #canvas-fullscreen {
+        display: inline-block;
+    }
+}
+
+.pdf-container {
+    margin: 0 20px;
+    padding: 60px 0 20px 0;
+    overflow: auto;
+    position: relative;
+    text-align: center;
+
+    .controls {
+        position: absolute;
+        top: 10px;
+        width: 100%;
+        height: 40px;
+
+        #pdf-fullscreen {
+            background-image: img("expand_dark.svg");
+            float: left;
+        }
+
+        .zoom {
+            display: none;
+            margin-left: 20px;
+            float: left;
+            #pdf-zoomin {
+                background-image: img("more_dark.svg");
+            }
+            #pdf-zoomout {
+                margin-left: 10px;
+                background-image: img("less_dark.svg");
+            }
+        }
+
+        .navPages {
+            margin-right: 20px;
+            float: right;
+            #pdf-prev {
+                background-image: img("left_dark.svg");
+                margin-right: 10px;
+            }
+            #pdf-next {
+                background-image: img("right_dark.svg");
+            }
+        }
+
+        .pdf-numeration {
+            @include font-size(16);
+            line-height: 1;
+            font-family: $text;
+            height: 40px;
+            display: inline-block;
+            float: right;
+            line-height: 40px;
+            color: #222;
+
+            #pdf-page-count, #pdf-page-num {
+                font-family: inherit;
+                font-size: inherit;
+                color: inherit;
+            }
+        }
+    }
+
+    .controls.anchor {
+        position: fixed;
+        z-index: $z-popups-default + 2;
+        top: $menu-top-height;
+        left: 0;
+        width: calc( 100% - #{$menu-tools-min} );
+        height: 50px;
+        padding: 4px 5%;
+        text-align: center;
+        background-color: #222;
+
+        #pdf-fullscreen {
+            background-image: img("collapse_light.svg");
+        }
+        .zoom {
+            display: block;
+        }
+        #pdf-zoomin {
+            background-image: img("more_light.svg");
+        }
+        #pdf-zoomout {
+            background-image: img("less_light.svg");
+        }
+        #pdf-prev {
+            background-image: img("left_light.svg");
+        }
+        #pdf-next {
+            background-image: img("right_light.svg");
+        }
+        .pdf-numeration {
+            color: #eee;
+        }
+
+
+
+    }
+
+    #canvas-main {
+        text-align: center;
+    }
+}

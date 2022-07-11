@@ -1,0 +1,695 @@
+body {
+    @include background();
+    // background-image: img("loader2_primary.svg"), linear-gradient(13deg, $main-s30, $main-t30);
+    // background-image: img('loader2_primary.svg'), radial-gradient(#fff 60%, #eee 90%);
+    background-size: 250px, cover;
+    // transition-duration: 0.2s;
+
+    &.keyboard-showing {
+        #menu-top,
+        #menu-tools,
+        #menu-aux {
+            display: none;
+        }
+        #fullcontent {
+            top: 0;
+            width: 100%;
+            height: 100%;
+        }
+        #content > .content,
+        #content > .column {
+            height: 100% !important;
+        }
+    }
+}
+
+#overlay {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: $z-overlay-default;
+    background-color: rgba(0, 0, 0, 0.5);
+
+    &.dark {
+        background-color: rgba(0, 0, 0, 0.6);
+    }
+    &.light {
+        background-color: rgba(255, 255, 255, 0.6);
+    }
+    &.primary {
+        background-color: rgba($main, 0.6);
+    }
+    &.transparent {
+        background-color: rgba(255, 255, 255, 0);
+    }
+    &.loading {
+        @include background($size: 60px, $image: img('loader4_light.svg'));
+    }
+    &.loading.light {
+        background-image: img('loader4_dark.svg');
+    }
+    &.blocking {
+        z-index: $z-overlay-blocking;
+    }
+    &.addedit {
+        z-index: $z-overlay-addedit;
+    }
+    &.blocking.loading {
+        background-color: rgba(0, 0, 0, 0.9);
+    }
+    &.blocking.loading.light {
+        background-color: rgba(255, 255, 255, 0.9);
+    }
+    &.blocking.loading.primary {
+        background-color: rgba($main, 0.9);
+    }
+}
+
+// Scroll de hora
+.vscroller {
+    $vscroll-height: 200px;
+    $vscroll-thumb: 40px;
+
+    @include display-flex();
+    padding: 0.5em 0.25em;
+    max-width: 100%;
+    -webkit-box-flex: 1;
+    -ms-touch-action: none;
+    justify-content: center;
+    touch-action: none;
+
+    .vscroller__head,
+    .vscroller__head2 {
+        // line-height: 30px;
+        height: auto;
+        text-align: center;
+        white-space: nowrap;
+        font-weight: bold;
+        text-transform: uppercase;
+        font-size: 1rem;
+    }
+
+    .vscroller__body,
+    .vscroller__body2 {
+        height: $vscroll-height;
+        overflow: hidden;
+        width: 3rem;
+        position: relative;
+    }
+
+    .vscroller__body,
+    .vscroller__body2 {
+        &:before {
+            content: '';
+            @include border-radius(3px);
+            background-color: $neutro-t90;
+            display: block;
+            height: 40px;
+            width: 100%;
+            position: absolute;
+            left: 0;
+            top: 80px;
+            bottom: auto;
+            right: auto;
+            z-index: 1;
+        }
+    }
+
+    .vscroller__body ul,
+    .vscroller__body2 ul {
+        display: block;
+        margin: 0;
+        padding: 0;
+        position: relative;
+        width: 3rem;
+        z-index: 3;
+        transform: translate3d(0px, 0px, 0px);
+    }
+
+    .vscroller__body li,
+    .vscroller__body2 li {
+        @include font-size(ml);
+        color: $main-text;
+        text-overflow: ellipsis;
+        line-height: $vscroll-thumb;
+        text-align: center;
+        white-space: nowrap;
+        display: block;
+        height: $vscroll-thumb;
+        width: 100%;
+        padding: 0 5px;
+        margin: 0;
+        position: relative;
+        overflow: hidden;
+        opacity: 0.3;
+        cursor: pointer;
+
+        &.hours {
+        }
+        &.minutes {
+        }
+    }
+
+    .vscroller__body li.vselected,
+    .vscroller__body2 li.vselected2 {
+        @include border-radius(3px);
+        @include font-size(l);
+        font-family: $text-bold;
+        opacity: 1;
+        background-color: $neutro-t30;
+    }
+
+    span.dots {
+        color: $main-text;
+        font-size: 22px;
+        line-height: $vscroll-height;
+        font-family: $text-bold;
+        height: $vscroll-height;
+    }
+}
+
+@import 'assets/_circle.scss';
+.chart {
+    @include border-radius(50%);
+    display: block;
+    height: 80px;
+    width: 80px;
+    float: left;
+    padding: 5px;
+
+    > span {
+        @include font-size(7);
+        font-family: $text;
+        line-height: 2.5em;
+    }
+}
+
+// HIDE SCROLLBAR
+// .hide-scrollbars,
+// .hide-scrollbar {
+//     overflow: -moz-scrollbars-none !important;
+//     -ms-overflow-style: none !important;
+// }
+
+.hide-scrollbars::-webkit-scrollbar,
+.hide-scrollbar::-webkit-scrollbar {
+    width: 0 !important;
+    height: 0 !important;
+    background: transparent !important;
+}
+.hide-scrollbars::-webkit-scrollbar-thumb,
+.hide-scrollbar::-webkit-scrollbar-thumb {
+    background: transparent;
+}
+
+.scrollbar {
+    overflow-y: auto;
+}
+.scrollbar::-webkit-scrollbar {
+    width: $scroll-width;
+    height: $scroll-width;
+}
+/* Track */
+.scrollbar::-webkit-scrollbar-track {
+    background: $default-bg-color;
+}
+.scrollbar.scrollbar-transparent::-webkit-scrollbar-track {
+    background: transparent;
+    background: rgba(255, 255, 255, 0.75);
+    // background: $default-content-color;
+}
+/* Handle */
+.scrollbar::-webkit-scrollbar-thumb,
+*::-webkit-scrollbar-thumb,
+*::-webkit-scrollbar {
+    @extend .interaction;
+    @include border-radius($scroll-width);
+    background: $main-t70;
+    transition-duration: $transition-duration;
+
+    @media (max-width: 1000px) {
+        width: 0.3rem;
+        height: 0.3rem;
+    }
+
+    @include bgHover($main-t70);
+}
+/* Handle on hover */
+.scrollbar::-webkit-scrollbar-thumb:hover,
+*::-webkit-scrollbar-thumb:hover {
+    @include border-radius($scroll-width);
+}
+.scrollbars {
+    @extend .scrollbar;
+}
+
+.btn {
+    @extend .interaction;
+    @include font-size(sm);
+    @include border-radius(3px);
+    background-color: $main;
+    padding: 12px 15px;
+    font-family: $text-bold;
+    color: #fff;
+    min-height: 40px;
+
+    &:hover {
+        background-color: hover($main, false, 2%);
+    }
+
+    &.disabled {
+        pointer-events: none !important;
+        @include opacity(0.2);
+        cursor: not-allowed;
+    }
+}
+
+.breadcrumbs {
+    display: none;
+
+    max-width: calc(50% - #{$menu-tools-min});
+
+    $bc-background: $main-s20;
+    $bc-background-active: $main-s10;
+
+    li {
+        &:nth-child(even) {
+            a {
+                background-color: $bc-background;
+
+                &:before {
+                    border-color: $bc-background;
+                    border-left-color: transparent;
+                }
+                &:after {
+                    border-left-color: $bc-background;
+                }
+            }
+        }
+        &:first-child {
+            a {
+                @include border-radius(0);
+                padding-left: 10px !important;
+                &:before {
+                    border: none;
+                }
+            }
+        }
+        &:last-child {
+            a {
+                @include border-radius(0);
+                padding-right: 15px;
+                &:after {
+                    border: none;
+                }
+            }
+        }
+
+        a {
+            padding: 0 25px 0 10px !important;
+            margin-right: 23px;
+            color: #fff !important;
+            background: $bc-background;
+            margin-left: 0 !important;
+            border-bottom: none !important;
+
+            &:before,
+            &:after {
+                content: '';
+                position: absolute;
+                top: 0;
+                border: 0 solid $bc-background;
+                border-width: 20px 10px;
+                width: 0;
+                height: 0;
+            }
+
+            &:before {
+                left: -20px;
+                border-left-color: transparent;
+            }
+            &:after {
+                left: 100%;
+                border-color: transparent;
+                border-left-color: $bc-background;
+            }
+
+            &:active {
+                background-color: $bc-background-active;
+
+                &:before {
+                    border-color: $bc-background-active;
+                    border-left-color: transparent;
+                }
+                &:after {
+                    border-left-color: $bc-background-active;
+                }
+            }
+        }
+    }
+}
+
+.vfc-main-container {
+    min-width: 20rem;
+
+    .vfc-navigation-buttons {
+        > div,
+        .vfc-cursor-pointer {
+            @include border-radius(6px);
+            // @include align-items(center);
+            // background-color: $neutro-t60;
+            background-color: transparent;
+            height: rem(40px);
+            width: rem(40px);
+            margin: 0 !important;
+
+            .vfc-arrow-right,
+            .vfc-arrow-left,
+            .vfc-disabled {
+                height: rem(40px);
+                width: rem(40px);
+                border-color: $main-text !important;
+                position: relative;
+                top: 0px;
+            }
+            .vfc-arrow-right {
+                right: -2px;
+            }
+            .vfc-arrow-left {
+                left: 8px;
+            }
+            .vfc-disabled {
+                opacity: 0.5;
+                border-color: $inactive-dark !important;
+                cursor: not-allowed;
+            }
+        }
+        > div:not(.vfc-cursor-pointer) {
+            // background-color: $inactive-t80;
+            background-color: transparent;
+        }
+
+        .vfc-top-date,
+        .vfc-top-date.vfc-underline {
+            margin: 0 !important;
+            text-decoration: none !important;
+            line-height: 1.8 !important;
+            color: $main-dark !important;
+        }
+    }
+
+    // .vfc-navigation-buttons {
+    //     margin-top: unset !important;
+    // }
+
+    .vfc-calendars {
+        .vfc-calendar:first-of-type {
+            .vfc-day {
+                .vfc-span-day,
+                .vfc-hover {
+                    width: 40px !important;
+                    height: 40px !important;
+                    line-height: 40px !important;
+                    font-family: $text-bold;
+                    border-radius: 3px !important;
+
+                    &:hover {
+                        background-color: $neutro-t40 !important;
+                        cursor: pointer;
+                    }
+                }
+
+                .vfc-today {
+                    background-color: $neutro !important;
+                    color: #000 !important;
+                }
+                .vfc-hide {
+                    font-family: $text;
+                    color: $neutro-s30 !important;
+                    font-size: 75% !important;
+                }
+                .vfc-disabled {
+                    color: $inactive-s30 !important;
+                }
+                .vfc-cursor-not-allowed {
+                    background: $error-t90;
+                    color: $error-t50 !important;
+
+                    &:hover {
+                        background: $error-t60 !important;
+                        color: $error-t20 !important;
+                    }
+                }
+                .vfc-marked,
+                .vfc-marked.vfc-today {
+                    background-color: $main-dark !important;
+                    color: #fff !important;
+                    border-radius: 3px !important;
+
+                    &:hover {
+                        background-color: $main-dark !important;
+                        cursor: pointer;
+                    }
+                }
+                .expiration {
+                    background-color: rgba($error-light, 0.5);
+                    color: $error-dark;
+                }
+            }
+        }
+
+        .vfc-content {
+            margin: 0 !important;
+            h2.vfc-top-date.vfc-cursor-pointer.vfc-underline {
+                color: #000 !important;
+            }
+
+            .vfc-top-date,
+            .vfc-top-date.vfc-underline {
+                margin: 0 !important;
+                text-decoration: none !important;
+                line-height: 1.8 !important;
+                color: $main-text !important;
+                padding: 5px 0;
+            }
+
+            .vfc-dayNames {
+                margin-top: 12px;
+                text-transform: uppercase;
+
+                span {
+                    @include font-size(12, $important: true);
+                    font-family: $text-light !important;
+                    color: $neutro-s20 !important;
+                }
+            }
+
+            .vfc-week {
+            }
+
+            .vfc-day {
+                .vfc-today:not(:hover) {
+                    background-color: rgba($main-t90, 0.8) !important;
+                    color: #000 !important;
+                    width: 40px !important;
+                    height: 40px !important;
+                    line-height: 40px !important;
+                }
+                .vfc-marked {
+                    background-color: $main-text !important;
+                    color: #000 !important;
+
+                    &:hover {
+                        background-color: $main-text !important;
+                    }
+                }
+                .expiration {
+                    background-color: $main-text !important;
+                    color: $error-dark !important;
+                }
+            }
+            > div {
+                height: calc(100% - 45px);
+            }
+        }
+    }
+
+    // View de months
+    .vfc-months-container {
+        .vfc-navigation-buttons {
+            > div:not(.vfc-cursor-pointer) {
+                // background-color: $neutro-t60;
+                background-color: transparent;
+            }
+        }
+    }
+
+    .vfc-months {
+        .vfc-item {
+            @include text-ellipsis();
+            @include border-radius(3px);
+            @include font-size(s, $important: true);
+            font-family: $text;
+            border-top: none !important;
+            height: 50px !important;
+            margin: 3px;
+            background-color: $neutro-t50;
+
+            &:hover {
+                background-color: $neutro-t30 !important;
+                cursor: pointer;
+            }
+        }
+        .vfc-item.vfc-selected {
+            background-color: $main-dark !important;
+            font-family: $text-bold;
+        }
+    }
+
+    // Time picker
+    .vfc-time-picker-container {
+        .vfc-close {
+            top: 10px;
+            width: 25px;
+            height: 25px;
+            opacity: 0.4;
+        }
+        .vfc-modal-time-line {
+            background-color: $main !important;
+            padding: 12px 0;
+            > span {
+                @include font-size(18);
+                color: #fff;
+                font-family: $text;
+            }
+        }
+
+        .vfc-time-picker__list {
+        }
+        .vfc-time-picker__item {
+            &.vfc-time-picker__item--selected {
+                color: $main;
+            }
+        }
+    }
+}
+
+.portrait {
+    .vfc-calendars {
+        .vfc-calendar:first-of-type {
+            .vfc-day {
+                .vfc-span-day,
+                .vfc-hover {
+                    font-size: 90%;
+                }
+            }
+        }
+    }
+}
+// Plugin functional calendar
+.vfc-styles-conditional-class .vfc-main-container {
+    box-shadow: none !important;
+}
+
+.title {
+    &.left {
+        text-align: left;
+    }
+    &.center {
+        text-align: center;
+    }
+    &.right {
+        text-align: right;
+    }
+}
+
+.title.lines {
+    @include font-size(16);
+    @include width-fit-content();
+    font-family: $text;
+    font-style: normal;
+    text-align: center;
+    color: $main-s30;
+    position: relative;
+    text-transform: uppercase;
+    margin: 20px auto;
+    @include font-size($size: 14, $important: true);
+    // display: block;
+
+    &:before,
+    &:after {
+        content: '';
+        width: 20px;
+        position: absolute;
+        top: 50%;
+        border-bottom: 1px solid $main-t60;
+    }
+
+    &:before {
+        left: -25px;
+    }
+    &:after {
+        right: -25px;
+    }
+}
+
+// especifico de forms
+.add-file {
+    width: 100%;
+    height: $dft-thumb-size;
+    position: relative;
+
+    .input-file {
+        @extend .interaction;
+        @include opacity(0);
+        width: 100%;
+        height: $dft-thumb-size;
+        overflow: hidden;
+        position: absolute;
+        left: 0;
+        z-index: 4;
+    }
+
+    .input-file + label {
+        @include font-size(14);
+        @include text-ellipsis();
+        @include border-radius(4px);
+        width: calc(100% - 20px);
+        height: $dft-thumb-size;
+        position: absolute;
+        left: 10px;
+        z-index: 1;
+        line-height: 35px;
+        margin: 0;
+        background-color: #fdfdfd;
+        padding-left: 10px;
+        font-style: italic;
+    }
+
+    .input-file + label {
+        cursor: pointer;
+    }
+    .input-file + label * {
+        pointer-events: none;
+    }
+}
+
+.list-move, /* apply transition to moving elements */
+.list-enter-active,
+.list-leave-active {
+    transition: all 0.5s ease;
+}
+
+.list-enter-from,
+.list-leave-to {
+    opacity: 0;
+    // transform: translateY(30px);
+}
+
+/* ensure leaving items are taken out of layout flow so that moving
+   animations can be calculated correctly. */
+.list-leave-active {
+    position: absolute;
+}

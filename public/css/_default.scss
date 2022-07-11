@@ -1,0 +1,275 @@
+/* HTML DEFAULTS */
+html,
+body {
+    font-family: $text;
+    background-color: #f9f9f9;
+    overscroll-behavior-y: contain !important;
+    overflow-y: hidden !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: $text-bold;
+    color: $main-s50;
+    margin: 0.8rem 0 1rem 0;
+    padding: 0 0.3rem;
+
+    small {
+        font-family: $text-light;
+        color: #aaa;
+        display: block;
+        padding: 0.4rem 0 0.2rem 1rem;
+    }
+}
+h1 {
+    // @include font-size(40);
+    @include font-size(48);
+}
+h2 {
+    // @include font-size(30);
+    @include font-size(40);
+}
+h3 {
+    // @include font-size(26);
+    @include font-size(33);
+}
+h4 {
+    // @include font-size(24);
+    @include font-size(28);
+}
+h5 {
+    // @include font-size(21);
+    @include font-size(23);
+}
+h6 {
+    // @include font-size(18);
+    @include font-size(20);
+}
+
+b,
+strong {
+    font-weight: bold;
+}
+i,
+em {
+    font-style: italic;
+}
+
+hr {
+    border: none;
+    height: 2px;
+    background-color: $main;
+    margin: 1.5rem 2rem;
+}
+
+a {
+    @extend .interaction;
+    color: inherit;
+    text-decoration: none;
+    white-space: pre-wrap;
+
+    &:link,
+    &:visited {
+        color: inherit;
+    }
+    &[href]:hover,
+    &[href]:focus {
+        color: inherit;
+    }
+    &:active {
+        color: inherit;
+    }
+}
+
+p {
+    padding: 0.2rem 0.3rem;
+}
+
+label {
+    @include font-size(14);
+    color: #777;
+    display: block;
+    margin: 0.5rem 0 0.1rem 0;
+    padding: 2px 4px;
+}
+
+input,
+textarea,
+select {
+    @extend .interaction;
+    outline: none;
+    border: none;
+    border-bottom: 2px solid #ddd;
+    background-color: #fff;
+    padding: 0.5rem 0.7rem 0.2rem 0.7rem;
+    margin: 0.1rem 0;
+    color: #777;
+    display: inline-block;
+    max-width: 100%;
+
+    &:hover {
+        background-color: hover(#fff);
+    }
+}
+
+input[type='checkbox'],
+input[type='radio'],
+input[type='image'] {
+}
+textarea {
+    @include border-radius(4px);
+    overflow-y: auto;
+    border: 1px solid #eee;
+    resize: none;
+}
+
+input[required],
+select[required],
+textarea[required] {
+    border-color: $main;
+}
+input:hover,
+textarea:hover,
+select:hover {
+    border-color: $main;
+}
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: $main;
+}
+
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+    border: none;
+    -webkit-text-fill-color: #777;
+    -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+}
+input:-webkit-autofill:hover,
+textarea:-webkit-autofill:hover,
+select:-webkit-autofill:hover {
+    border: none;
+    -webkit-text-fill-color: #777;
+    -webkit-box-shadow: 0 0 0px 1000px hover(#fff) inset;
+}
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill:focus {
+    border: none;
+    -webkit-text-fill-color: #777;
+    -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+}
+
+select.dft {
+    @include background($image: img('down_dark.svg'), $position: right 4px center, $size: 10px);
+    padding-right: 18px;
+}
+
+button,
+input[type='button'],
+input[type='submit'] {
+    @extend .interaction;
+    outline: none;
+    border: none;
+    color: #666;
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+    display: inline-block;
+    max-width: 100%;
+    width: auto;
+
+    &:hover {
+        background-color: hover($main);
+    }
+    &.loading {
+        background-image: img('loader_light.svg');
+        background-position: center center;
+        background-size: 30px;
+        pointer-events: none;
+        min-width: 60px;
+        width: inherit;
+        color: transparent;
+    }
+}
+
+button:hover,
+button:focus,
+input[type='button']:hover,
+input[type='button']:focus,
+input[type='submit']:hover,
+input[type='submit']:focus {
+    // background-color: $main-t90;
+    // color: $main-s50;
+}
+
+button:active,
+input[type='button']:active,
+input[type='submit']:active {
+    // background-color: $main-t90;
+    // color: $main-s50;
+    // background-color: $main;
+    // color: #fff;
+}
+
+// placeholders
+$placeholder-color: $neutro-s20;
+
+::placeholder {
+    //   font-style: italic;
+    @include font-size(s);
+    color: $placeholder-color;
+}
+:ms-input-placeholder {
+    // font-style: italic;
+    @include font-size(s);
+    color: $placeholder-color;
+}
+::-webkit-input-placeholder {
+    // font-style: italic;
+    @include font-size(s);
+    color: $placeholder-color;
+}
+::-moz-placeholder {
+    // font-style: italic;
+    @include font-size(s);
+    color: $placeholder-color;
+}
+:-ms-input-placeholder {
+    // font-style: italic;
+    @include font-size(s);
+    color: $placeholder-color;
+}
+:-moz-placeholder {
+    // font-style: italic;
+    @include font-size(s);
+    color: $placeholder-color;
+}
+
+/* -- HTML DEFAULTS */
+
+/* DEFAULT SCROLLBAR */
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #ccc;
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #777;
+}
+/* -- DEFAULT SCROLLBAR */
