@@ -2,15 +2,18 @@
     <div id="def-layout">
         <Header></Header>
         <Content id="content"></Content>
+        <Footer></Footer>
     </div>
 </template>
 
 <script>
 import Header from "@/components/layouts/Header.vue";
 import Content from "@/components/layouts/Content.vue";
+import Footer from "@/components/layouts/Footer.vue";
+
 export default {
     name: "Default-Layout",
-    components: { Header, Content },
+    components: { Header, Content, Footer },
     data() {
         return {};
     },
@@ -32,7 +35,7 @@ export default {
     #content {
         margin-top: $menu-top-height;
         width: 100%;
-        height: calc(100% - #{$menu-top-height});
+        height: calc(100% - #{$menu-top-height} - #{$footer-height});
     }
 }
 </style>
