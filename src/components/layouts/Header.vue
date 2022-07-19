@@ -10,10 +10,17 @@ export default {};
 
 <style lang="scss" scoped>
 #header {
+    @include background(
+        $image: img("logo-w.png"),
+        $position: center left 10px,
+        $size: 25px
+    );
     background-color: $main;
     position: fixed;
     width: 100%;
     height: $menu-top-height;
     top: 0;
+    padding-left: 60px;
+    line-height: $menu-top-height;
 }
 </style>
