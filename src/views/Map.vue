@@ -21,12 +21,13 @@
 
             <GmapMarker
                 key="center"
-                :position="center"
+                :position="initPoint"
                 :clickable="true"
                 :draggable="false"
                 @click="center = m.position"
             />
         </GmapMap>
+        <div class="button act add">Añadir</div>
     </div>
 </template>
 
@@ -46,7 +47,9 @@ export default {
                 disableDefaultUI: false,
             },
             center: { lat: 10, lng: 10 },
+            initPoint: { lat: 10, lng: 10 },
             reportedMapCenter: { lat: 10, lng: 10 },
+            adding_point: false,
         };
     },
     computed: {
@@ -73,10 +76,12 @@ export default {
     },
     methods: {
         updateCenter(latLng) {
-            this.reportedMapCenter = {
-                lat: latLng.lat(),
-                lng: latLng.lng(),
-            };
+            if (this.adding_point) {
+                this.reportedMapCenter = {
+                    lat: latLng.lat(),
+                    lng: latLng.lng(),
+                };
+            }
         },
         sync() {
             this.center = this.reportedMapCenter;
@@ -84,6 +89,7 @@ export default {
     },
     created() {
         var self = this;
+        this.$overlay.loading();
 
         var options = {
             enableHighAccuracy: true,
@@ -98,9 +104,12 @@ export default {
             console.log("Latitude : " + crd.latitude);
             console.log("Longitude: " + crd.longitude);
             console.log("More or less " + crd.accuracy + " meters.");
+            self.$overlay.hide();
 
-            self.center.lat = crd.latitude;
-            self.center.lng = crd.longitude;
+            self.initPoint.lat = crd.latitude;
+            self.initPoint.lng = crd.longitude;
+
+            self.center = self.initPoint;
         }
 
         function error(err) {
@@ -117,5 +126,28 @@ export default {
     height: 100%;
     position: relative;
     background: red;
+
+    .button {
+        border-radius: 10px;
+        padding: 10px 15px;
+        background-color: $accent;
+        color: #fff;
+        position: fixed;
+        bottom: 200px;
+        right: 50px;
+        cursor: pointer;
+
+        &.add {
+            @include background(
+                $image: img("add_ffffff.svg"),
+                $position: center left 10px,
+                $size: 16px
+            );
+
+            font-weight: bold;
+            font-size: 1.2em;
+            padding-left: 40px;
+        }
+    }
 }
 </style>

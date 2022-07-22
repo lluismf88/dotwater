@@ -12,7 +12,7 @@ export default {};
 #header {
     @include background(
         $image: img("logo-w.png"),
-        $position: center left 10px,
+        $position: center left 25px,
         $size: 25px
     );
     background-color: $main;

@@ -1,7 +1,7 @@
 <template>
     <div id="def-layout">
         <Header></Header>
-        <Content id="content"></Content>
+        <Content></Content>
         <Footer></Footer>
     </div>
 </template>
@@ -31,11 +31,5 @@ export default {
     max-width: 100vw;
     max-height: 100vh;
     position: relative;
-
-    #content {
-        margin-top: $menu-top-height;
-        width: 100%;
-        height: calc(100% - #{$menu-top-height} - #{$footer-height});
-    }
 }
 </style>
