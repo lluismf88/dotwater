@@ -1,5 +1,4 @@
 const dotService = require("../services/dotService");
-const x = 1;
 
 const getAllDots = async (req, res) => {
     const allDots = await dotService.getAllDots();
