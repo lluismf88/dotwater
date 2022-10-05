@@ -21,13 +21,15 @@
 
             <GmapMarker
                 key="center"
-                :position="initPoint"
+                :position="center"
                 :clickable="true"
                 :draggable="false"
                 @click="center = m.position"
             />
         </GmapMap>
-        <div class="button act add">Añadir</div>
+        <div v-if="!isAddPointOpen" class="button act add" @click="addPoint">
+            Añadir
+        </div>
     </div>
 </template>
 
@@ -48,30 +50,30 @@ export default {
             },
             center: { lat: 10, lng: 10 },
             initPoint: { lat: 10, lng: 10 },
-            reportedMapCenter: { lat: 10, lng: 10 },
+            reportedMapCenter: false,
             adding_point: false,
         };
     },
     computed: {
+        isAddPointOpen() {
+            return this.$store.getters.isAddPointOpen;
+        },
+
         markers() {
-            return [
-                {
-                    position: { lat: 30, lng: 30 },
-                    icon: {
-                        url: "img/ico-map.png",
-                        size: { width: 35, height: 50, f: "px", b: "px" },
-                        scaledSize: { width: 35, height: 50, f: "px", b: "px" },
-                    },
-                },
-                {
-                    position: { lat: 10, lng: 10 },
-                    icon: {
-                        url: "img/ico-map.png",
-                        size: { width: 35, height: 50, f: "px", b: "px" },
-                        scaledSize: { width: 35, height: 50, f: "px", b: "px" },
-                    },
-                },
-            ];
+            let markers = this.$store.getters["dot/getList"];
+            markers.forEach((dot) => {
+                dot.position = {
+                    lat: +dot.coords.coordinates[0],
+                    lng: +dot.coords.coordinates[1],
+                };
+                dot.icon = {
+                    url: "img/ico-map.png",
+                    size: { width: 35, height: 50, f: "px", b: "px" },
+                    scaledSize: { width: 35, height: 50, f: "px", b: "px" },
+                };
+            });
+
+            return markers;
         },
     },
     methods: {
@@ -81,42 +83,65 @@ export default {
                     lat: latLng.lat(),
                     lng: latLng.lng(),
                 };
+
+                this.$store.commit(
+                    "dot/setCurrentPoint",
+                    this.reportedMapCenter
+                );
             }
         },
+
         sync() {
-            this.center = this.reportedMapCenter;
+            if (this.reportedMapCenter) {
+                console.log("sync", this.reportedMapCenter);
+                this.center = this.reportedMapCenter;
+            }
+        },
+
+        addPoint() {
+            this.$store.commit("setAddPointOpen", true);
+            this.adding_point = true;
+        },
+
+        loadUserPosition() {
+            var self = this;
+
+            var options = {
+                enableHighAccuracy: true,
+                timeout: 5000,
+                maximumAge: 0,
+            };
+
+            function success(pos) {
+                var crd = pos.coords;
+
+                console.log("Your current position is:");
+                console.log("Latitude : " + crd.latitude);
+                console.log("Longitude: " + crd.longitude);
+                console.log("More or less " + crd.accuracy + " meters.");
+                self.$overlay.hide();
+
+                self.initPoint.lat = crd.latitude;
+                self.initPoint.lng = crd.longitude;
+
+                self.center = self.initPoint;
+            }
+
+            function error(err) {
+                console.warn("ERROR(" + err.code + "): " + err.message);
+                self.$overlay.hide();
+            }
+
+            navigator.geolocation.getCurrentPosition(success, error, options);
         },
     },
     created() {
         var self = this;
         this.$overlay.loading();
 
-        var options = {
-            enableHighAccuracy: true,
-            timeout: 5000,
-            maximumAge: 0,
-        };
-
-        function success(pos) {
-            var crd = pos.coords;
-
-            console.log("Your current position is:");
-            console.log("Latitude : " + crd.latitude);
-            console.log("Longitude: " + crd.longitude);
-            console.log("More or less " + crd.accuracy + " meters.");
-            self.$overlay.hide();
-
-            self.initPoint.lat = crd.latitude;
-            self.initPoint.lng = crd.longitude;
-
-            self.center = self.initPoint;
-        }
-
-        function error(err) {
-            console.warn("ERROR(" + err.code + "): " + err.message);
-        }
-
-        navigator.geolocation.getCurrentPosition(success, error, options);
+        this.$store.dispatch("dot/loadDotList").then(() => {
+            self.loadUserPosition();
+        });
     },
 };
 </script>
